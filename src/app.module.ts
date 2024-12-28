@@ -5,11 +5,11 @@ import { UserModule } from './user/user.module';
 import { UrlModule } from './url/url.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { AnlyticsService } from './anlytics/anlytics.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UserModule, UrlModule, AnalyticsModule, PrismaModule],
+  imports: [UserModule, UrlModule, AnalyticsModule, PrismaModule, AuthModule],
   controllers: [AuthController],
-  providers: [AuthService, AnlyticsService],
+  providers: [AuthService],
 })
 export class AppModule {}
