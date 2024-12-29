@@ -8,7 +8,7 @@ export class PrismaService extends PrismaClient {
     super({
       datasources: {
         db: {
-          url: 'mongodb+srv://avishekprasad0999:1tPRmSnHaHqxeJCs@zypro-links.fdrn5.mongodb.net/?retryWrites=true&w=majority&appName=zypro-links',
+          url: 'mongodb+srv://avishekprasad0999:1tPRmSnHaHqxeJCs@zypro-links.fdrn5.mongodb.net/zypro?retryWrites=true&w=majority&appName=zypro-links',
         },
       },
     });
