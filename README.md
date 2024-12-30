@@ -32,7 +32,7 @@
 $ yarn install
 ```
 
-## Compile and run the projec
+## Compile and run the project
 
 ```bash
 # development
