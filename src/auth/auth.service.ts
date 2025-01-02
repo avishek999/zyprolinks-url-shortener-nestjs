@@ -17,7 +17,7 @@ export class AuthService {
     if (existingUser) {
       throw new ForbiddenException('name is already in used ');
     }
-    // genrate the hash
+    // generate the hash
 
     const hash = await argon.hash(dto.password);
 
@@ -38,7 +38,22 @@ export class AuthService {
 
     return user;
   }
-  signin() {
-    return {};
+  async signin(dto: AuthDto) {
+    const user = await this.prisma.user.findUnique({
+      where: { name: dto.name },
+    });
+
+    if (!user) {
+      throw new ForbiddenException('Invalid credentials');
+    }
+
+    // verify the password
+    const valid = await argon.verify(user.hash, dto.password);
+    if (!valid) {
+      throw new ForbiddenException('Invalid credentials');
+    }
+    delete user.hash;
+
+    return user;
   }
 }
