@@ -7,13 +7,13 @@ export class UrlService {
   constructor(private prisma: PrismaService) {}
 
   async createShortUrl(originalUrl: string, userId: string) {
-    const shortCode = uuidv4().slice(0, 8); // Generate short code
+    const shortCode = uuidv4().slice(0, 8);
 
     return this.prisma.shortUrl.create({
       data: {
         originalUrl,
         shortCode,
-        createdById: userId, // Store the user who created it
+        createdById: userId,
       },
     });
   }
@@ -27,6 +27,12 @@ export class UrlService {
       throw new NotFoundException('Short URL not found');
     }
 
-    return shortUrl.originalUrl; // Return the original URL
+    return shortUrl.originalUrl;
+  }
+
+  async getAllUrl() {
+    const allurl = await this.prisma.shortUrl.findMany();
+
+    return allurl;
   }
 }
