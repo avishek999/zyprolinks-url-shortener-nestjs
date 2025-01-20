@@ -9,15 +9,14 @@ import {
 } from '@nestjs/common';
 import { UrlService } from './url.service';
 
-@Controller('url') // Define the base route for the short URL API
+@Controller('url')
 export class UrlController {
   constructor(private readonly shortUrlService: UrlService) {}
 
-  // Endpoint to create a short URL
   @Post()
   async createShortUrl(
-    @Body('originalUrl') originalUrl: string, // Extract original URL from request body
-    @Body('userId') userId: string, // Extract userId from request body
+    @Body('originalUrl') originalUrl: string,
+    @Body('userId') userId: string,
   ) {
     if (!originalUrl) {
       throw new Error('Original URL is required');
@@ -34,13 +33,20 @@ export class UrlController {
     };
   }
 
-  // Endpoint to get the original URL based on the short code
+  @Get()
+  async getAllUrl() {
+    const url = await this.shortUrlService.getAllUrl();
+
+    return url;
+  }
+
   @Get(':shortCode')
-  @Redirect() // This decorator is used to handle the redirect
+  @Redirect()
   async getOriginalUrl(@Param('shortCode') shortCode: string) {
     try {
       const originalUrl = await this.shortUrlService.getOriginalUrl(shortCode);
-      return { url: originalUrl }; // Return the original URL for redirection
+
+      return { url: originalUrl };
     } catch (error) {
       throw new NotFoundException('Short URL not found');
     }
